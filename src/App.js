@@ -1,24 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import { useMemoStore } from './store/MemoList';
+import MemoBoard from './components/MemoBoard';
+import MemoInput from './components/MemoInput';
+import MemoElem from './components/MemoElem';
+import { Card } from './components/Count';
 
 function App() {
+  const { memoList } = useMemoStore();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Card />
+      <MemoBoard>
+        {memoList.length ? (
+          memoList.map((e) => {
+            return (
+              <MemoElem key={e.id} id={e.id}>
+                {e.content}
+              </MemoElem>
+            );
+          })
+        ) : (
+          <span> 메모 입력해주세요</span>
+        )}
+      </MemoBoard>
+      <MemoInput />
+    </>
   );
 }
 
